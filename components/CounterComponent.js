@@ -6,12 +6,7 @@ const CounterComponent = () => {
   return (
     <>
       <p className={styles.count}>{count}</p>
-      <button
-        className={styles.button}
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
+      <button className={styles.button} onClick={() => setCount(count + 1)}>
         Increment
       </button>
     </>
