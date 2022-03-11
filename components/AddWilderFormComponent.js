@@ -1,14 +1,32 @@
 import { useState } from "react";
+import axios from "axios";
 
-const AddWilderForm = () => {
+const AddWilderForm = ({ trigger, setTrigger }) => {
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
+  const [error, setError] = useState("");
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
+        try {
+          setError("");
+          const result = await axios.post("http://localhost:5000/api/wilders", {
+            name: name,
+            city: city,
+          });
+          if (result.data.success === false) {
+            setError("An error occurred");
+          }
+          console.log("result", result);
+          setTrigger(trigger + 1);
+        } catch (err) {
+          console.log("error", err);
+          setError("An error occurred");
+        }
       }}
     >
+      {error && <p>{error}</p>}
       <label htmlFor="name-input">Name :</label>
       <input
         id="name-input"

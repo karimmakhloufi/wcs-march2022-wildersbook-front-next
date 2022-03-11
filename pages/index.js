@@ -4,12 +4,13 @@ import Wilder from "../components/WilderComponent";
 import AddWilderForm from "../components/AddWilderFormComponent";
 
 const Home = () => {
+  const [trigger, setTrigger] = useState(0);
   const [wildersData, setWildersData] = useState([]);
   const fetchData = async () => {
     const result = await axios.get("http://localhost:5000/api/wilders");
     setWildersData(result.data.result);
   };
-  useEffect(() => fetchData(), []);
+  useEffect(() => fetchData(), [trigger]);
   return (
     <div>
       <header>
@@ -18,7 +19,7 @@ const Home = () => {
         </div>
       </header>
       <main className="container">
-        <AddWilderForm />
+        <AddWilderForm trigger={trigger} setTrigger={setTrigger} />
         <h2>Wilders</h2>
         <section className="card-row">
           {wildersData.map((wilder) => {
